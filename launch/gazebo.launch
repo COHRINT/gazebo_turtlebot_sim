@@ -1,0 +1,110 @@
+<!--Sierra Willams-->
+<!--01/18/17-->
+<!--This launch file starts up gazebo and places deckard and pris into the world -->
+<!-- This will also place map furnature eventually -->
+
+<launch>
+
+  <!-- Transform Between Map and odom-->     
+  <node pkg="tf" type="static_transform_publisher" 
+      name="mapToOdomDeckard" args="0 0 0 0 0 0 /map /deckard/odom 2"/>
+  <!-- Transform Between Map and odom-->     
+  <node pkg="tf" type="static_transform_publisher" 
+      name="mapToOdomPris" args="0 0 0 0 0 0 /map /pris/odom 2"/>
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched.  Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+<!-- Must add map server here probably hri -->
+<node name="map_server" pkg="hri_map_server" type="map_server" args="$(find gazebo_turtlebot_sim)/map/occupancy_grid.yaml">
+    <param name="frame_id" value="/map" />
+  </node>
+
+
+  <!-- Spawn models   -->
+
+  <!-- The current size of the nodes are 1.0 and thr roads are a pinwidith of 25 with the origin in the top left corner -->
+
+  <include file="model_spawn.gazebo.launch">
+     <arg name="model_dbname" value="deckard_full_sim"/>
+     <arg name="model_position" value="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" />
+  </include>
+  <include file="model_spawn.gazebo.launch">
+     <arg name="model_dbname" value="pris_full_sim"/>
+     <arg name="model_position" value="-x 1 -y 1 -z 0 -R 0 -P 0 -Y 0" />
+  </include>
+
+
+<!--   Objects in map -->
+
+  <include file="model_spawn.gazebo.launch">
+     <arg name="model_dbname" value="$(arg model_name_1)"/>
+     <arg name="model_position" value="$(arg model_pos_1) $(arg model_orientation_1)" />
+  </include>
+
+  <include file="model_spawn.gazebo.launch">
+     <arg name="model_dbname" value="$(arg model_name_2)"/>
+     <arg name="model_position" value="$(arg model_pos_2) $(arg model_orientation_2)" />
+  </include>
+
+    <include file="model_spawn.gazebo.launch">
+     <arg name="model_dbname" value="$(arg model_name_3)"/>
+     <arg name="model_position" value="$(arg model_pos_3) $(arg model_orientation_3)" />
+  </include>
+
+  <include file="model_spawn.gazebo.launch">
+     <arg name="model_dbname" value="$(arg model_name_4)"/>
+     <arg name="model_position" value="$(arg model_pos_4) $(arg model_orientation_4)" />
+  </include>
+
+  <include file="model_spawn.gazebo.launch">
+     <arg name="model_dbname" value="$(arg model_name_5)"/>
+     <arg name="model_position" value="$(arg model_pos_5) $(arg model_orientation_5)" />
+  </include>
+
+
+  <!-- Spawn Walls   -->   
+  <!-- figure out how to change size -->
+<!--   <include file="wall_spawn.gazebo.launch">
+     <arg name="wall_name" value="$(arg wall_name_1)"/>
+     <arg name="wall_position" value="$(arg wall_pos_1) $(arg wall_orientation_1)" />
+     <arg name="wall_size" value="$(arg wall_size_1)" />
+  </include>
+
+  <include file="wall_spawn.gazebo.launch">
+     <arg name="wall_name" value="$(arg wall_name_2)"/>
+     <arg name="wall_position" value="$(arg wall_pos_2) $(arg wall_orientation_2)" />
+     <arg name="wall_size" value="$(arg wall_size_2)" />
+  </include>
+
+  <include file="wall_spawn.gazebo.launch">
+     <arg name="wall_name" value="$(arg wall_name_3)"/>
+     <arg name="wall_position" value="$(arg wall_pos_3) $(arg wall_orientation_3)" />
+     <arg name="wall_size" value="$(arg wall_size_3)" />
+  </include>
+
+  <include file="wall_spawn.gazebo.launch">
+     <arg name="wall_name" value="$(arg wall_name_4)"/>
+     <arg name="wall_position" value="$(arg wall_pos_4) $(arg wall_orientation_4)" />
+     <arg name="wall_size" value="$(arg wall_size_4)" />
+  </include> -->
+
+  <!-- Running other launch files  -->
+
+  <group ns="deckard">
+    <param name="tf_prefix" value="deckard"/>
+    <include file="$(find gazebo_turtlebot_sim)/turtlebot_nav/move_base.launch"/>
+  </group>
+
+  <group ns="pris">
+    <param name="tf_prefix" value="pris"/>
+    <include file="$(find gazebo_turtlebot_sim)/turtlebot_nav/move_base.launch"/>
+  </group>
+
+</launch>

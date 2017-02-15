@@ -1,0 +1,10 @@
+digraph G {
+"map" -> "deckard/odom"[label="Broadcaster: /mapToOdomDeckard\nAverage rate: 98.320 Hz\nMost recent transform: 661.714 ( 0.003 sec old)\nBuffer length: 9.998 sec\n"];
+"map" -> "pris/odom"[label="Broadcaster: /mapToOdomPris\nAverage rate: 99.769 Hz\nMost recent transform: 661.717 ( 0.000 sec old)\nBuffer length: 9.963 sec\n"];
+"deckard/odom" -> "deckard/base_footprint"[label="Broadcaster: /gazebo\nAverage rate: 19.700 Hz\nMost recent transform: 661.714 ( 0.003 sec old)\nBuffer length: 10.000 sec\n"];
+"pris/odom" -> "pris/base_footprint"[label="Broadcaster: /gazebo\nAverage rate: 19.708 Hz\nMost recent transform: 661.715 ( 0.002 sec old)\nBuffer length: 9.945 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 661.717"[ shape=plaintext ] ;
+ }->"map";
+}

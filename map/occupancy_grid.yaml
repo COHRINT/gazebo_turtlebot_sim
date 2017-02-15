@@ -1,0 +1,8 @@
+image: occupancy_grid.png
+# meters per pixel
+resolution: 0.01 
+origin: [0.0, 0.0, 0.0]
+occupied_thresh: 0.5
+free_thresh: 0.5
+negate: 0
+mode: raw
