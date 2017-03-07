@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <model name="deckard_moves">
+  <model name="deckard_full_sim">
     <link name="rack">
       <inertial>
         <pose>0.001453 -0.000453 0.029787 0 0 0</pose>
@@ -498,7 +498,7 @@
 
 
     <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
-      <commandTopic>mobile_base/commands/velocity</commandTopic>
+      <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <odometryRate>20.0</odometryRate>

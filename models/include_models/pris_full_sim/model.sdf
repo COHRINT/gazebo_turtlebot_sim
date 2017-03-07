@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <model name="pris">
+  <model name="Pris_Full_Sim">
     <static>true</static>
     <link name="rack">
       <inertial>
@@ -491,7 +491,7 @@
     </joint>
 
     <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
-      <commandTopic>mobile_base/commands/velocity</commandTopic>
+      <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <odometryRate>20.0</odometryRate>
